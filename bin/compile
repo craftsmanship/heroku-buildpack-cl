@@ -34,10 +34,10 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
+export_env_dir $ENV_DIR
+
 CL_DIR="$CACHE_DIR/$CL_IMPL"
 echo "-----> compile params: $BUILD_DIR $CACHE_DIR $ENV_DIR"
-
-export_env_dir $ENV_DIR
 
 if [ $RESET_CACHE ]; then
   echo "-----> flushing cache"
