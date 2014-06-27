@@ -35,7 +35,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 
 CL_DIR="$CACHE_DIR/$CL_IMPL"
-echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
+echo "-----> compile params: $BUILD_DIR $CACHE_DIR $ENV_DIR"
 
 export_env_dir $ENV_DIR
 
