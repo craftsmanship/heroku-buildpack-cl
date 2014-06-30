@@ -6,7 +6,7 @@ A Buildpack that allows you to deploy Common Lisp applications on the Heroku inf
 Original work by Mike Travers, mt@hyperphor.com  
 Secondary work by José Santos, jsmpereira@gmail.com
 
-> Example app at http://protected-lake-6567.herokuapp.com
+> Example app at https://github.com/craftsmanship/heroku-cl-example
 
 ## Changes 
 * Support for SBCL and Hunchentoot.
