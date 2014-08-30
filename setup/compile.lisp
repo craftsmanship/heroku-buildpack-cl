@@ -51,6 +51,8 @@
 
 ;;; Default toplevel, app can redefine.
 (defun heroku-toplevel ()
+  (initialize-application)
+  ;; Start the web server
   (let ((port (parse-integer (heroku-getenv "PORT"))))
     (format t "Listening on port ~A~%" port)
     (ecase *cl-webserver*
