@@ -27,9 +27,9 @@
   (if (probe-file ql-setup)
       (load ql-setup)
       (progn
-	(load (make-pathname :directory (append *buildpack-dir* '("lib")) :defaults "quicklisp.lisp"))
-	(funcall (symbol-function (find-symbol "INSTALL" (find-package "QUICKLISP-QUICKSTART")))
-		 :path (make-pathname :directory (pathname-directory ql-setup))))))
+        (load (make-pathname :directory (append *buildpack-dir* '("lib")) :defaults "quicklisp.lisp"))
+        (funcall (symbol-function (find-symbol "INSTALL" (find-package "QUICKLISP-QUICKSTART")))
+                 :path (make-pathname :directory (pathname-directory ql-setup))))))
 
 (ecase *cl-webserver*
   (hunchentoot (ql:quickload "hunchentoot"))
@@ -39,17 +39,20 @@
 	    ;;; several systems in there, because we are using versions that are
 	    ;;; different from those in Quicklisp. (update: Can't just load the files apparently,
 	    ;;; have to add dirs to asdf:*central-registry*.  Blah.
-	    (let* ((asds (directory (make-pathname :directory  (append *cache-dir* '( "repos" :wild-inferiors))
-						   :name :wild
-						   :type "asd")))
-		   (directories (remove-duplicates (mapcar #'pathname-directory asds) :test #'equal)))
-	      (dolist (d directories)
-		(push (make-pathname :directory d) asdf:*central-registry*))))))
+            (let* ((asds (directory (make-pathname :directory  (append *cache-dir* '( "repos" :wild-inferiors))
+                                                   :name :wild
+                                                   :type "asd")))
+                   (directories (remove-duplicates (mapcar #'pathname-directory asds) :test #'equal)))
+              (dolist (d directories)
+                (push (make-pathname :directory d) asdf:*central-registry*))))))
+
+;;; App can redefine this to do compiletime tasks
+(defun do-when-compile ())
 
 ;;; App can redefine this to do runtime initializations
 (defun initialize-application ())
 
-;;; Default toplevel, app can redefine.
+ ;;; Default toplevel, app can redefine.
 (defun heroku-toplevel ()
   (initialize-application)
   ;; Start the web server
@@ -63,6 +66,8 @@
 
 ;;; This loads the application
 (load (merge-pathnames "heroku-setup.lisp" *build-dir*))
+
+(do-when-compile)
 
 (defun h-save-app (app-file)
   #+ccl (save-application app-file
