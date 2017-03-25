@@ -54,6 +54,9 @@
 ;;; App can redefine this to do runtime initializations
 (defun initialize-application ())
 
+;;; This loads the application
+(load (merge-pathnames "heroku-setup.lisp" *build-dir*))
+
 ;;; Default toplevel, app can redefine.
 (defun heroku-toplevel ()
   (initialize-application)
@@ -69,9 +72,6 @@
                       (declare (ignore env)
                                *woo-handlers*)))))
     (loop (sleep 60))))
-
-;;; This loads the application
-(load (merge-pathnames "heroku-setup.lisp" *build-dir*))
 
 (do-when-compile)
 
