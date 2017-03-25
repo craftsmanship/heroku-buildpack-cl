@@ -53,7 +53,10 @@
 ;;; App can redefine this to do runtime initializations
 (defun initialize-application ())
 
- ;;; Default toplevel, app can redefine.
+;; if use woo to http server, then MUST redefine *woo-handlers*
+(defparameter *woo-handlers* nil)
+
+;;; Default toplevel, app can redefine.
 (defun heroku-toplevel ()
   (initialize-application)
   ;; Start the web server
@@ -62,7 +65,11 @@
     (ecase *cl-webserver*
       (hunchentoot (funcall (symbol-function (find-symbol "START" (find-package "HUNCHENTOOT")))
 		     (funcall 'make-instance (find-symbol "EASY-ACCEPTOR" (find-package "HUNCHENTOOT")) :port port)))
-      (aserve (funcall (symbol-function (find-symbol "START" (find-package "NET.ASERVE"))) :port port)))
+      (aserve (funcall (symbol-function (find-symbol "START" (find-package "NET.ASERVE"))) :port port))
+      (woo (funcall (symbol-function (find-symbol "RUN" (find-package "WOO")))
+                    (lambda (env)
+                      (declare (ignore env)
+                               *woo-handlers*)))))
     (loop (sleep 60))))
 
 ;;; This loads the application
