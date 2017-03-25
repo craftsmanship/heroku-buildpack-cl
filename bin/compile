@@ -51,8 +51,9 @@ case $CL_IMPL in
     DECOMPRESS="tar xjf - -C $CL_DIR"
     ;;
   ccl)
-    S3_BUCKET="cl-heroku"
-    CL_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/ccl-1.7.tgz"
+    S3_REGION="s3-ap-northeast-1"
+    S3_BUCKET="climpl"
+    CL_PACKAGE="https://${s3_REGION}.amazonaws.com/${S3_BUCKET}/ccl-1.11-linuxx86.tar.gz"
     DECOMPRESS="tar xzf - -C $CL_DIR"
     export CCL_DEFAULT_DIRECTORY=$CL_DIR # overwrite CCL_DEFAULT_DIRECTORY on ccl64
     ;;
