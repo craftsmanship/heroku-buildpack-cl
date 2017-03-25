@@ -69,8 +69,8 @@
       (aserve (funcall (symbol-function (find-symbol "START" (find-package "NET.ASERVE"))) :port port))
       (woo (funcall (symbol-function (find-symbol "RUN" (find-package "WOO")))
                     (lambda (env)
-                      (declare (ignore env)
-                               *woo-handlers*)))))
+                      (declare (ignore env))
+                      *woo-handlers*))))
     (loop (sleep 60))))
 
 (do-when-compile)
