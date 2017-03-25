@@ -44,7 +44,8 @@
                                                    :type "asd")))
                    (directories (remove-duplicates (mapcar #'pathname-directory asds) :test #'equal)))
               (dolist (d directories)
-                (push (make-pathname :directory d) asdf:*central-registry*))))))
+                (push (make-pathname :directory d) asdf:*central-registry*)))))
+  (woo (ql:quickload :woo)))
 
 ;;; App can redefine this to do compiletime tasks
 (defun do-when-compile ())
