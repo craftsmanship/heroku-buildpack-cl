@@ -53,7 +53,7 @@ case $CL_IMPL in
   ccl)
     S3_REGION="s3-ap-northeast-1"
     S3_BUCKET="climpl"
-    CL_PACKAGE="https://${s3_REGION}.s3.amazonaws.com/${S3_BUCKET}/ccl-1.11-linuxx86.tar.gz"
+    CL_PACKAGE="https://${S3_REGION}.amazonaws.com/${S3_BUCKET}/ccl-1.11-linuxx86.tar.gz"
     DECOMPRESS="tar xzf - -C $CL_DIR"
     export CCL_DEFAULT_DIRECTORY=$CL_DIR # overwrite CCL_DEFAULT_DIRECTORY on ccl64
     ;;
