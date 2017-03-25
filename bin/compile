@@ -53,7 +53,7 @@ case $CL_IMPL in
   ccl)
     S3_REGION="s3-ap-northeast-1"
     S3_BUCKET="climpl"
-    CL_PACKAGE="https://${s3_REGION}.amazonaws.com/${S3_BUCKET}/ccl-1.11-linuxx86.tar.gz"
+    CL_PACKAGE="https://${s3_REGION}.s3.amazonaws.com/${S3_BUCKET}/ccl-1.11-linuxx86.tar.gz"
     DECOMPRESS="tar xzf - -C $CL_DIR"
     export CCL_DEFAULT_DIRECTORY=$CL_DIR # overwrite CCL_DEFAULT_DIRECTORY on ccl64
     ;;
@@ -68,42 +68,44 @@ case $CL_WEBSERVER in
   aserve)
     # setting up paths for building
     echo "-----> Getting patched versions of libraries"
-    
+
     mkdir $CACHE_DIR/repos    # should be under an if to avoid error
     pushd $CACHE_DIR/repos
-    
+
     if [ -d $CACHE_DIR/repos/portableaserve ]; then
          echo 'aserve already present'
          pushd portableaserve
          git pull origin master
          popd
-    else 
+    else
         git clone git://github.com/mtravers/portableaserve.git
     fi
-    
+
     if [ -d $CACHE_DIR/repos/wuwei ]; then
          echo 'wuwei already present'
          pushd wuwei
          git pull origin master
          popd
-    else 
+    else
         git clone git://github.com/mtravers/wuwei.git
     fi
-    
+
     popd
     ;;
+  woo)
+    ;;
   *)
-    echo "-----> ! Please set CL_WEBSERVER: heroku config:add CL_WEBSERVER={hunchentoot|aserve}."
+    echo "-----> ! Please set CL_WEBSERVER: heroku config:add CL_WEBSERVER={hunchentoot|aserve|woo}."
     exit 1
 esac
 
 echo "-----> Installing $CL_IMPL"
 if [ ! -d $CL_DIR ]; then
     echo "-----> Fetching $CL_IMPL"
-    mkdir -p $CL_DIR  && curl $CL_PACKAGE -s -o -  | $DECOMPRESS
+    mkdir -p $CL_DIR && curl $CL_PACKAGE -s -o - | $DECOMPRESS
 fi
 
-# add to slug 
+# add to slug
 cp -r $CL_DIR $BUILD_DIR
 
 echo "$CL_IMPL installed" | indent
