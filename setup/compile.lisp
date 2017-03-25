@@ -17,6 +17,7 @@
 (defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (heroku-getenv "CACHE_DIR") "/"))))
 (defvar *buildpack-dir* (pathname-directory (pathname (concatenate 'string (heroku-getenv "BUILDPACK_DIR") "/"))))
 (defvar *cl-webserver* (read-from-string (heroku-getenv "CL_WEBSERVER")))
+(defparameter *woo-handlers* nil)       ; if use woo to http server, then MUST redefine *woo-handlers*
 
 ;;; Tell ASDF to store binaries in the cache dir
 (heroku-setenv)
@@ -52,9 +53,6 @@
 
 ;;; App can redefine this to do runtime initializations
 (defun initialize-application ())
-
-;; if use woo to http server, then MUST redefine *woo-handlers*
-(defparameter *woo-handlers* nil)
 
 ;;; Default toplevel, app can redefine.
 (defun heroku-toplevel ()
